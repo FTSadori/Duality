@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Sources.Client.Runtime.Framework.Unity
+namespace Client.Runtime.Framework.Unity
 {
     public abstract class ButtonCommand : MonoCommand
     {

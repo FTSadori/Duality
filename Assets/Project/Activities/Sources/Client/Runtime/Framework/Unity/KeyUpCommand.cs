@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Sources.Client.Runtime.Framework.Unity
+namespace Client.Runtime.Framework.Unity
 {
     public abstract class KeyUpCommand : MonoCommand
     {
