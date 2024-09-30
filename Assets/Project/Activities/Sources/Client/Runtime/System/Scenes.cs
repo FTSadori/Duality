@@ -14,6 +14,7 @@ namespace Client.Runtime.System
         public static class Activity
         {
             public const string Lobby = "Activity_Lobby";
+            public const string Saves = "Activity_Saves";
         }
     }
 }
