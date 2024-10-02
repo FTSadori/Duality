@@ -8,6 +8,9 @@ namespace Client.Runtime.System.Bootstrap
         private AsyncOperation _loadLobbyOperation;
         private bool _isLobbyLoaded = false;
 
+        private AsyncOperation _loadBackgroundOperation;
+        private bool _isBackgroundLoaded = false;
+
         private void Awake()
         {
             SceneManager.LoadSceneAsync(Scenes.System.MainCamera, LoadSceneMode.Additive);
@@ -15,6 +18,8 @@ namespace Client.Runtime.System.Bootstrap
             SceneManager.LoadSceneAsync(Scenes.System.Audio, LoadSceneMode.Additive);
             _loadLobbyOperation = SceneManager.LoadSceneAsync(Scenes.Activity.Lobby, LoadSceneMode.Additive);
             _loadLobbyOperation.completed += OnLobbySceneLoaded;
+            _loadBackgroundOperation = SceneManager.LoadSceneAsync(Scenes.Activity.LobbyBackground, LoadSceneMode.Additive);
+            _loadBackgroundOperation.completed += OnBackgroundSceneLoaded;
         }
 
         private void OnLobbySceneLoaded(AsyncOperation operation)
@@ -22,9 +27,14 @@ namespace Client.Runtime.System.Bootstrap
             _isLobbyLoaded = operation.isDone;
         }
 
+        private void OnBackgroundSceneLoaded(AsyncOperation operation)
+        {
+            _isBackgroundLoaded = operation.isDone;
+        }
+
         private void Update()
         {
-            if (_isLobbyLoaded)
+            if (_isLobbyLoaded && _isBackgroundLoaded)
             {
                 SceneManager.UnloadSceneAsync(gameObject.scene.name);
             }
