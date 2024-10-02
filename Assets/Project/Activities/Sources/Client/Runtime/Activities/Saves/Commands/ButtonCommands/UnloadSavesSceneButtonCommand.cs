@@ -1,13 +1,13 @@
-﻿using Client.Runtime.Framework.Unity;
-using UnityEngine.SceneManagement;
+﻿using Client.Runtime.System;
+using Client.Runtime.Framework.Unity.SceneCommands;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Client.Runtime.Activities.Saves.Commands.ButtonCommands
 {
-    public sealed class UnloadSavesSceneButtonCommand : ButtonCommand
+    public sealed class UnloadSavesSceneButtonCommand : ChangeSceneButtonCommand
     {
-        public override void Execute()
-        {
-            SceneManager.UnloadSceneAsync(gameObject.scene.name);
-        }
+        protected override string SceneToActivate => Scenes.Activity.Lobby;
+        protected override List<string> ScenesToUnload => new() { Scenes.Activity.Saves };
     }
 }
