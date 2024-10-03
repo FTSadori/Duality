@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 namespace Client.Runtime.Framework.Unity.SceneCommands
 {
-    public abstract class ChangeSceneButtonCommand : ButtonCommand
+    public abstract class ManageScenesButtonCommand : ButtonCommand
     {
         private AsyncOperation _operation;
-        abstract protected string SceneToActivate { get; }
+        abstract protected string SceneToLoadAndActivate { get; }
         abstract protected List<string> ScenesToUnload { get; }
+        abstract protected List<string> ScenesToLoad { get; }
 
         public override void Execute()
         {
@@ -17,21 +18,40 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
                 return;
             }
 
-            Scene gameScene = SceneManager.GetSceneByName(SceneToActivate);
+            ScenesToLoad.ForEach(s =>
+            {
+                if (!SceneManager.GetSceneByName(s).isLoaded)
+                {
+                    SceneManager.LoadSceneAsync(s, LoadSceneMode.Additive);
+                }
+            });
+            ScenesToUnload.ForEach(s =>
+            {
+                if (SceneManager.GetSceneByName(s).isLoaded)
+                {
+                    SceneManager.UnloadSceneAsync(s);
+                }
+            });
+            
+            if (SceneToLoadAndActivate != "")
+                LoadAndActivateScene();
+        }
+
+        private void LoadAndActivateScene()
+        {
+            Scene gameScene = SceneManager.GetSceneByName(SceneToLoadAndActivate);
             if (gameScene != default && gameScene.isLoaded)
             {
                 return;
             }
 
-            _operation = SceneManager.LoadSceneAsync(SceneToActivate, LoadSceneMode.Additive);
+            _operation = SceneManager.LoadSceneAsync(SceneToLoadAndActivate, LoadSceneMode.Additive);
             _operation.completed += ActivateScene;
         }
 
         private void ActivateScene(AsyncOperation operation)
         {
-            ScenesToUnload.ForEach(s => SceneManager.UnloadSceneAsync(s));
-            
-            Scene gameScene = SceneManager.GetSceneByName(SceneToActivate);
+            Scene gameScene = SceneManager.GetSceneByName(SceneToLoadAndActivate);
             if (gameScene != default)
             {
                 SceneManager.SetActiveScene(gameScene);

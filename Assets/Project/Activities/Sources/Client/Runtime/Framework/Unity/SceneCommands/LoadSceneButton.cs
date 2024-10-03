@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Client.Runtime.Framework.Unity.SceneCommands
 {
-    public abstract class ActivateSceneButton : ChangeSceneButtonCommand
+    public abstract class LoadSceneButton : ManageScenesButtonCommand
     {
+        protected override string SceneToLoadAndActivate => "";
         protected override List<string> ScenesToUnload => new() { };
     }
 }
