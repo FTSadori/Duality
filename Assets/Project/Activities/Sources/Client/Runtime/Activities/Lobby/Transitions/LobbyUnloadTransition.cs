@@ -1,5 +1,4 @@
 ﻿using Client.Runtime.Framework.Unity.TransitionBehaviors;
-using Codice.Client.Common.GameUI;
 using UnityEngine;
 using UnityEngine.UI;
 
