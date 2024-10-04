@@ -11,6 +11,6 @@ namespace Client.Runtime.Activities.Saves.Commands.ButtonCommands
         [SerializeField] private int _saveNumber;
         protected override string SceneToLoadAndActivate => Scenes.Activity.Tutorial;
         protected override List<string> ScenesToUnload => new() { Scenes.Activity.Saves, Scenes.Activity.LobbyBackground };
-        protected override List<string> ScenesToLoad => new();
+        protected override List<string> ScenesToLoad => new() { Scenes.Activity.GameGUI };
     }
 }
