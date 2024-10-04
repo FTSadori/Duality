@@ -30,6 +30,7 @@ namespace Client.Runtime.System.Bootstrap
         private void OnBackgroundSceneLoaded(AsyncOperation operation)
         {
             _isBackgroundLoaded = operation.isDone;
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(Scenes.Activity.LobbyBackground));
         }
 
         private void Update()

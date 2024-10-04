@@ -18,6 +18,20 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
                 return;
             }
 
+            LoadScenes();
+
+            if (SceneToLoadAndActivate != "")
+            {
+                LoadAndActivateScene();
+            }
+            else
+            {
+                UnloadScenes();
+            }
+        }
+
+        private void LoadScenes()
+        {
             ScenesToLoad.ForEach(s =>
             {
                 if (!SceneManager.GetSceneByName(s).isLoaded)
@@ -25,6 +39,10 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
                     SceneManager.LoadSceneAsync(s, LoadSceneMode.Additive);
                 }
             });
+        }
+
+        private void UnloadScenes()
+        {
             ScenesToUnload.ForEach(s =>
             {
                 if (SceneManager.GetSceneByName(s).isLoaded)
@@ -32,15 +50,12 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
                     SceneManager.UnloadSceneAsync(s);
                 }
             });
-            
-            if (SceneToLoadAndActivate != "")
-                LoadAndActivateScene();
         }
 
         private void LoadAndActivateScene()
         {
             Scene gameScene = SceneManager.GetSceneByName(SceneToLoadAndActivate);
-            if (gameScene != default && gameScene.isLoaded)
+            if (gameScene.isLoaded)
             {
                 return;
             }
@@ -51,12 +66,10 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
 
         private void ActivateScene(AsyncOperation operation)
         {
-            Scene gameScene = SceneManager.GetSceneByName(SceneToLoadAndActivate);
-            if (gameScene != default)
-            {
-                SceneManager.SetActiveScene(gameScene);
-            }
-            
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(SceneToLoadAndActivate));
+
+            UnloadScenes();
+
             Complete();
         }
 
