@@ -1,5 +1,4 @@
 ﻿using Client.Runtime.Activities.Game.Player;
-using Codice.Client.Common.GameUI;
 using UnityEngine;
 using UnityEngine.Assertions;
 
