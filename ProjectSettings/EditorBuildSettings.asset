@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Project/Activities/System/System_Input.unity
     guid: 9440d3f197e337543844dd240c59f265
   - enabled: 1
+    path: Assets/Project/Activities/Game/Scenes/Activity_GameGUI.unity
+    guid: 7e579e19c1b0df2488c02408794b5bc2
+  - enabled: 1
     path: Assets/Project/Activities/Game/Scenes/Activity_IngameMenu.unity
     guid: c24a6a139499f6a41a662416d4bb4e48
   - enabled: 1
