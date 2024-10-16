@@ -1,4 +1,5 @@
 ﻿
+using Client.Runtime.Activities.Game.Controllers;
 using Client.Runtime.Framework.Presenter;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,12 +17,34 @@ namespace Client.Runtime.Activities.Game.Player
         {
             Assert.IsNotNull(_playerView, "[PlayerPresenter] PlayerView is required");
         }
+
+        private void PlayerGotHit(GameObject gameObject)
+        {
+            if (gameObject.TryGetComponent(out BulletController bulletController))
+            {
+                _playerModel.CurrentHP -= bulletController.ContactDamage;
+                _playerView.Rigidbody.AddForce(bulletController._forceVector, ForceMode2D.Impulse);
+                bulletController.AfterEnemyHit();
+            }
+        }
+
+        private void ModelHpChanged()
+        {
+            Debug.Log($"Player HP {_playerModel.CurrentHP} / {_playerModel.MaxHP}");
+        }
+
         public override void Enable()
         {
+            _playerView.OnGotHit += PlayerGotHit;
+
+            _playerModel.OnHPChanged += ModelHpChanged;
         }
 
         public override void Disable()
         {
+            _playerView.OnGotHit -= PlayerGotHit;
+
+            _playerModel.OnHPChanged -= ModelHpChanged;
         }
     }
 }
