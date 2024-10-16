@@ -1,9 +1,9 @@
 ﻿using Client.Runtime.Activities.Game.Controllers;
 using Client.Runtime.Activities.Game.Player;
 using Client.Runtime.Activities.Game.Player.Base;
-using Client.Runtime.Framework.Unity;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace Client.Runtime.Activities.Game.Commands.AttackCommands
 {
@@ -13,12 +13,15 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private CursorController _cursorController;
         [SerializeField] private GameObject _swordPrefab;
+        [Inject] private PlayerModel _playerModel;
 
-        [Header("Values")]
-        [SerializeField] private float _distanceToSword = 0.25f;
-        [SerializeField] private float _swordAmplitude;
-        [SerializeField] private float _swordRotationSpeed = 30f;
-        [SerializeField] private float _swordPositionNormalize = 0.2f;
+        private float _knockbackPower = 20f;
+        private float _soulPerAttack = 0.3f;
+
+        private float _distanceToSword = 0.3f;
+        private float _swordAmplitude = 70f;
+        private float _swordRotationSpeed = 500f;
+        private float _swordPositionNormalize = 0.2f;
 
         private GameObject _currentSword = null;
         private float _currentSwordTargetAngle;
@@ -53,7 +56,8 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
                 Quaternion.Euler(0, 0, _cursorController.CursorAngle + _swordDirection * _swordAmplitude - 90f)
                 );
             _currentSwordTargetAngle = 2f * _swordAmplitude;
-            //_currentSword.GetComponent<BulletController>().SetOwner(gameObject);
+
+            SubscribeToBullet(_currentSword);
         }
 
         private void AnimateSword()
@@ -70,7 +74,30 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
 
             if (_currentSwordTargetAngle < 0f)
             {
+                UnsubscribeFromBullet(_currentSword);
                 Destroy(_currentSword);
+            }
+        }
+
+        private void AddSoul()
+        {
+            _playerModel.Soul += _soulPerAttack;
+        }
+
+        private void SubscribeToBullet(GameObject bullet)
+        {
+            if (bullet.TryGetComponent(out BulletController bulletController))
+            {
+                bulletController._forceVector = _knockbackPower * _cursorController.CursorDirection;
+                bulletController.OnHit += AddSoul;
+            }
+        }
+
+        private void UnsubscribeFromBullet(GameObject bullet)
+        {
+            if (bullet.TryGetComponent(out BulletController bulletController))
+            {
+                bulletController.OnHit -= AddSoul;
             }
         }
     }
