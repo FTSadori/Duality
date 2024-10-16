@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace Client.Runtime.Activities.Game.Player.Controllers
 {
     public sealed class MovePlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerView _playerView;
-        [SerializeField] private float _baseSpeed = 4f;
+        [Inject] private PlayerModel _playerModel;
 
         private void Awake()
         {
@@ -24,7 +25,7 @@ namespace Client.Runtime.Activities.Game.Player.Controllers
 
         private void Moving(Vector2 normalized)
         {
-            _playerView.Rigidbody.position += Time.fixedDeltaTime * _baseSpeed * normalized;
+            _playerView.Rigidbody.position += Time.fixedDeltaTime * _playerModel.Speed * normalized;
         }
     }
 }
