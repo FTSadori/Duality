@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1574149868474298788}
   - component: {fileID: 3526598415270623499}
   - component: {fileID: 4478762972617353984}
+  - component: {fileID: 4853831822375669173}
   m_Layer: 0
   m_Name: BlackSword
   m_TagString: Untagged
@@ -170,7 +171,7 @@ BoxCollider2D:
   m_Offset: {x: -0.0051540434, y: -0.010308415}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2, y: 2}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
@@ -180,3 +181,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48467368, y: 1.9793832}
   m_EdgeRadius: 0
+--- !u!114 &4853831822375669173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8506136757028163933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2afd5791d27707544a3418ba19916808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ContactDamage: 1
+  IsDestroyableFromContact: 0
+  TimeToAutoDestroy: 5
+  _rb: {fileID: 3526598415270623499}
