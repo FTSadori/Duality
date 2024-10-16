@@ -1,27 +1,44 @@
-﻿using System;
+﻿using Client.Runtime.Activities.Game.Entity;
+using System;
 using UnityEngine;
 
 namespace Client.Runtime.Activities.Game.Player
 {
-    public sealed class PlayerModel
+    public sealed class PlayerModel : AbstractEntityModel
     {
-        private int _maxHp = 5;
-        private int _hp = 5;
-        public event Action PlayerIsDead;
+        public Action OnSoulChanged;
+        public Action OnMaxSoulChanged;
 
-        public int MaxHp { get; }
+        private float _maxSoul;
+        private float _soul;
 
-        public int Hp
+        public float MaxSoul
         {
-            get => _hp;
+            get => _maxSoul;
+            set 
+            { 
+                _maxSoul = Mathf.Max(0f, value);
+                Soul = _soul;
+                OnMaxSoulChanged?.Invoke();
+            }
+        }
+
+        public float Soul
+        {
+            get => _soul;
             set
             {
-                _hp = Mathf.Clamp(value, 0, _maxHp);
-                if (_hp == 0)
-                {
-                    PlayerIsDead?.Invoke();
-                }
+                _soul = Mathf.Clamp(value, 0f, _maxSoul);
+                OnSoulChanged?.Invoke();
             }
+        }
+
+        private float _baseSpeed = 4f;
+
+        public float Speed
+        {
+            get => _baseSpeed;
+            set => _baseSpeed = Mathf.Max(0f, value);
         }
     }
 }
