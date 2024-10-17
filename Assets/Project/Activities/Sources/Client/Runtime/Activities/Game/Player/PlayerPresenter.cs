@@ -1,5 +1,6 @@
 ﻿
 using Client.Runtime.Activities.Game.Controllers;
+using Client.Runtime.Activities.Game.Entity.Enemy;
 using Client.Runtime.Framework.Presenter;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -28,6 +29,17 @@ namespace Client.Runtime.Activities.Game.Player
             }
         }
 
+        private void PlayerGotContact(GameObject gameObject)
+        {
+            float force = 10f;
+
+            if (gameObject.TryGetComponent(out EnemyView enemyView))
+            {
+                _playerModel.CurrentHP -= enemyView.ContactDamage;
+                _playerView.Rigidbody.AddForce((_playerView.Rigidbody.position - enemyView.Rigidbody.position).normalized * force, ForceMode2D.Impulse);
+            }
+        }
+
         private void ModelHpChanged()
         {
             Debug.Log($"Player HP {_playerModel.CurrentHP} / {_playerModel.MaxHP}");
@@ -36,6 +48,7 @@ namespace Client.Runtime.Activities.Game.Player
         public override void Enable()
         {
             _playerView.OnGotHit += PlayerGotHit;
+            _playerView.OnGotContact += PlayerGotContact;
 
             _playerModel.OnHPChanged += ModelHpChanged;
         }
@@ -43,6 +56,7 @@ namespace Client.Runtime.Activities.Game.Player
         public override void Disable()
         {
             _playerView.OnGotHit -= PlayerGotHit;
+            _playerView.OnGotContact -= PlayerGotContact;
 
             _playerModel.OnHPChanged -= ModelHpChanged;
         }

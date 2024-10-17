@@ -11,6 +11,7 @@ namespace Client.Runtime.Activities.Game.Player
         public Rigidbody2D Rigidbody => _rigidbody;
 
         public event Action<GameObject> OnGotHit;
+        public event Action<GameObject> OnGotContact;
 
         private void Awake()
         {
@@ -21,6 +22,12 @@ namespace Client.Runtime.Activities.Game.Player
         {
             if (collision.gameObject.CompareTag("EnemyBullet"))
                 OnGotHit?.Invoke(collision.gameObject);
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("EnemyEntity"))
+                OnGotContact?.Invoke(collision.gameObject);
         }
     }
 }
