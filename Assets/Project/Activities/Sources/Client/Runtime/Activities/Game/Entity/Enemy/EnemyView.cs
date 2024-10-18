@@ -8,6 +8,7 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy
     {
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private int _contactDamage;
+
         public Rigidbody2D Rigidbody => _rigidbody;
         public int ContactDamage => _contactDamage;
 
@@ -17,6 +18,18 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy
         }
 
         public event Action<GameObject> OnGotHit;
+        public event Action OnFindPlayer;
+        public event Action OnLosePlayer;
+
+        public void WhenFindPlayer()
+        {
+            OnFindPlayer?.Invoke();
+        }
+
+        public void WhenLosePlayer()
+        {
+            OnLosePlayer?.Invoke();
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
