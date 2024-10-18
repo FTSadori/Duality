@@ -38,6 +38,7 @@ namespace Client.Runtime.Activities.IngameMenu.Commands.ButtonCommands
             if (_unloadIngameMenu)
             {
                 SceneManager.UnloadSceneAsync(Scenes.Activity.IngameMenu);
+                ScenesState.RemoveInLoad(Scenes.Activity.IngameMenu);
             }
 
             Complete();

@@ -1,6 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections.Generic;
+using Client.Runtime.System;
 
 namespace Client.Runtime.Framework.Unity.SceneCommands
 {
@@ -34,9 +35,10 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
         {
             ScenesToLoad.ForEach(s =>
             {
-                if (!SceneManager.GetSceneByName(s).isLoaded)
+                if (!SceneManager.GetSceneByName(s).isLoaded && !ScenesState.IsInLoad(s))
                 {
                     SceneManager.LoadSceneAsync(s, LoadSceneMode.Additive);
+                    ScenesState.AddInLoad(s);
                 }
             });
         }
@@ -48,6 +50,7 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
                 if (SceneManager.GetSceneByName(s).isLoaded)
                 {
                     SceneManager.UnloadSceneAsync(s);
+                    ScenesState.RemoveInLoad(s);
                 }
             });
         }
@@ -55,11 +58,12 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
         private void LoadAndActivateScene()
         {
             Scene gameScene = SceneManager.GetSceneByName(SceneToLoadAndActivate);
-            if (gameScene.isLoaded)
+            if (gameScene.isLoaded || ScenesState.IsInLoad(SceneToLoadAndActivate))
             {
                 return;
             }
 
+            ScenesState.AddInLoad(SceneToLoadAndActivate);
             _operation = SceneManager.LoadSceneAsync(SceneToLoadAndActivate, LoadSceneMode.Additive);
             _operation.completed += ActivateScene;
         }

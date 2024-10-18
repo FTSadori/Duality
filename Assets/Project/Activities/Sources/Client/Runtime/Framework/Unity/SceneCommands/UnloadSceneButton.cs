@@ -4,13 +4,9 @@ using UnityEngine.SceneManagement;
 
 namespace Client.Runtime.Framework.Unity.SceneCommands
 {
-    public abstract class UnloadSceneButton : ButtonCommand
+    public abstract class UnloadSceneButton : ManageScenesButtonCommand
     {
-        abstract protected List<string> ScenesToUnload { get; }
-
-        public override void Execute()
-        {
-            ScenesToUnload.ForEach(s => SceneManager.UnloadSceneAsync(s));
-        }
+        protected override string SceneToLoadAndActivate => "";
+        protected override List<string> ScenesToLoad => new() { };
     }
 }
