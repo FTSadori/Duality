@@ -37,15 +37,31 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy
             Debug.Log($"Enemy HP {_enemyController.Model.CurrentHP} / {_enemyController.Model.MaxHP}");
         }
 
+        private void PlayerFound()
+        {
+            Debug.Log("I can see you =)");
+            _enemyController.Model.CanSeePlayer = true;
+        }
+
+        private void PlayerLosed()
+        {
+            Debug.Log("I can't see you :(");
+            _enemyController.Model.CanSeePlayer = false;
+        }
+
         public override void Enable()
         {
             _enemyView.OnGotHit += EntityGotHit;
+            _enemyView.OnFindPlayer += PlayerFound;
+            _enemyView.OnLosePlayer += PlayerLosed;
             _enemyController.Model.OnHPChanged += ModelHpChanged;
         }
 
         public override void Disable()
         {
             _enemyView.OnGotHit -= EntityGotHit;
+            _enemyView.OnFindPlayer -= PlayerFound;
+            _enemyView.OnLosePlayer -= PlayerLosed;
             _enemyController.Model.OnHPChanged -= ModelHpChanged;
         }
 
