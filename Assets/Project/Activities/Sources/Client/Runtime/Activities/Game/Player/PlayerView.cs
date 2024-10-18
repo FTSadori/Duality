@@ -13,6 +13,8 @@ namespace Client.Runtime.Activities.Game.Player
         public event Action<GameObject> OnGotHit;
         public event Action<GameObject> OnGotContact;
 
+        public Vector3 FixedPosition => _rigidbody.position + Vector2.up;
+
         private void Awake()
         {
             Assert.IsNotNull(_rigidbody, "[PlayerView] Rigidbody is required");

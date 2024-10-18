@@ -48,7 +48,7 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
 
         private void CreateSword()
         {
-            Vector3 startPosition = _playerView.Rigidbody.position + new Vector2(0, 1f);
+            Vector3 startPosition = _playerView.FixedPosition;
             _swordDirection *= -1f;
             _currentSword = Instantiate(
                 _swordPrefab,
@@ -62,7 +62,7 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
 
         private void AnimateSword()
         {
-            Vector3 startPosition = _playerView.Rigidbody.position + new Vector2(0, 1f);
+            Vector3 startPosition = _playerView.FixedPosition;
             _currentSword.transform.position = startPosition +
                 _distanceToSword * _cursorController.CursorDirection + 
                 _swordPositionNormalize * new Vector3(Input.GetAxis("Horizontal"), 0, 0);

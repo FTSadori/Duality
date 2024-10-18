@@ -36,8 +36,8 @@ namespace Client.Runtime.Activities.Game.Controllers
             if (Mathf.Sign(_cursorDirection.x) == -1f)
                 _cursorAngle = 180f - _cursorAngle;
 
-            _cursorObject.transform.position = _playerView.Rigidbody.position + _distanceFromPlayer * _cursorDirection;
-            _cursorObject.transform.position += new Vector3(0f, 1f);
+            var pos = new Vector2(_playerView.FixedPosition.x, _playerView.FixedPosition.y) + _distanceFromPlayer * _cursorDirection;
+            _cursorObject.transform.position = pos;
         }
     }
 }
