@@ -21,5 +21,36 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy.Controllers
         {
             Model = new EnemyModel(_startMaxHp, _knockbackResistance);
         }
+
+        private void Start()
+        {
+            Model.OnDeath += BeforeDeath;
+        }
+
+        private void Update()
+        {
+            if (Model.CurrentHP == 0) 
+                return;
+
+            if (Model.CanSeePlayer)
+            {
+                _attackMoving?.Execute();
+                _attack?.Execute();
+            }
+            else
+            {
+                _idleMoving?.Execute();
+            }
+        }
+
+        private void BeforeDeath()
+        {
+            _onDeath?.Execute();
+        }
+
+        private void OnDestroy()
+        {
+            Model.OnDeath -= BeforeDeath;
+        }
     }
 }
