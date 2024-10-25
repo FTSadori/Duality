@@ -44,6 +44,7 @@ namespace Client.Runtime.System.Bootstrap
         private void OnDestroy()
         {
             _loadLobbyOperation.completed -= OnLobbySceneLoaded;
+            _loadBackgroundOperation.completed -= OnBackgroundSceneLoaded;
         }
     }
 }
