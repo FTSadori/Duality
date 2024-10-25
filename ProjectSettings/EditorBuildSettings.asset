@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Project/Activities/Bootstrap/Scenes/Bootstrap.unity
     guid: cecd78f3c24c8c24fbbda0778afd9498
@@ -24,30 +21,18 @@ EditorBuildSettings:
     path: Assets/Project/Activities/Game/Scenes/Activity_GameGUI.unity
     guid: 7e579e19c1b0df2488c02408794b5bc2
   - enabled: 1
-    path: Assets/Project/Activities/Game/Scenes/Activity_IngameMenu.unity
-    guid: c24a6a139499f6a41a662416d4bb4e48
-  - enabled: 1
-    path: Assets/Project/Activities/Game/Scenes/Activity_ExitToLobbyPopUp.unity
-    guid: 6b8dbff949aecbb478eb8b07810d595c
-  - enabled: 1
     path: Assets/Project/Activities/Lobby/Scenes/Activity_LobbyBackground.unity
     guid: 417bde9570d751d44a8c5d233e89cd43
+  - enabled: 1
+    path: Assets/Project/Activities/Bootstrap/Scenes/GameBootstrap.unity
+    guid: f6a393bf2635c034da5683f4cee4c26f
   - enabled: 1
     path: Assets/Project/Activities/Game/Scenes/Activity_Tutorial.unity
     guid: ab8fff5a2bf18f34aa7a08071285f747
   - enabled: 1
-    path: Assets/Project/Activities/Lobby/Scenes/Activity_ExitGamePopUp.unity
-    guid: 514258abbdf7e154aa9a9835c33fbba3
-  - enabled: 1
     path: Assets/Project/Activities/Lobby/Scenes/Activity_Extra.unity
     guid: 1a4802e425de69043aa90ee384c1e349
   - enabled: 1
-    path: Assets/Project/Activities/Lobby/Scenes/Activity_Saves.unity
-    guid: 3fc9471dd87f01e4db249deaec9d46c5
-  - enabled: 1
     path: Assets/Project/Activities/Lobby/Scenes/Activity_Lobby.unity
     guid: 5b033bb2748a0de43a0cead9bc87bf93
-  - enabled: 1
-    path: Assets/Project/Activities/Lobby/Scenes/Activity_Settings.unity
-    guid: 293de690d673f634fba044abd349ba26
   m_configObjects: {}
