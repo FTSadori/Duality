@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Client.Runtime.Framework.Unity.SceneCommands
 {
-    public abstract class UnloadSceneButton : ManageScenesButtonCommand
+    public abstract class UnloadSceneButton : ManageScenesCommand
     {
         protected override string SceneToLoadAndActivate => "";
         protected override List<string> ScenesToLoad => new() { };
