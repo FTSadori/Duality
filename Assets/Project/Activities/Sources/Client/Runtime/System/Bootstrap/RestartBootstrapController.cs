@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Sources.Client.Runtime.System.Bootstrap
 {
-    public sealed class GameBootstrapController : MonoBehaviour
+    public sealed class RestartBootstrapController : MonoBehaviour
     {
         public static string _currentLevel = "";
 

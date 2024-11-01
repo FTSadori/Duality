@@ -44,9 +44,8 @@ namespace Client.Runtime.Activities.Game.Commands.ButtonCommands
         {
             if (_screenCompleted && _menuCompleted)
             {
-                GameBootstrapController._currentLevel = SceneManager.GetActiveScene().name;
-                Debug.Log(GameBootstrapController._currentLevel);
-                SceneManager.LoadSceneAsync(Scenes.Activity.GameBootstrap, LoadSceneMode.Additive);
+                RestartBootstrapController._currentLevel = SceneManager.GetActiveScene().name;
+                SceneManager.LoadSceneAsync(Scenes.Activity.RestartBootstrap, LoadSceneMode.Additive);
                 _screenCompleted = false;
                 _menuCompleted = false;
             }

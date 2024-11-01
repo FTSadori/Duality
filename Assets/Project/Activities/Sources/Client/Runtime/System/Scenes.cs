@@ -18,7 +18,8 @@ namespace Client.Runtime.System
             public const string Extra = "Activity_Extra";
             public const string GameGUI = "Activity_GameGUI";
             public const string Tutorial = "Activity_Tutorial";
-            public const string GameBootstrap = "GameBootstrap";
+            public const string RestartBootstrap = "RestartBootstrap";
+            public const string TransitionBootstrap = "TransitionBootstrap";
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Client.Runtime.Activities.Lobby.Commands.AnimationCommands;
+using Client.Runtime.System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Client.Runtime.Framework.Unity.SceneCommands
 {
     public sealed class TransitionedManageScenesButtonCommand : ButtonCommand
     {
-        [SerializeField] private SequenceCommand _outSequence;
         [SerializeField] private ManageScenesCommand _manageCommand;
         private bool _isFree = true;
         
@@ -13,15 +15,9 @@ namespace Client.Runtime.Framework.Unity.SceneCommands
             if (_isFree)
             {
                 _isFree = false;
-                _outSequence.OnComplete += Manage;
-                _outSequence.Execute();
+                TransitionBootstrapController._manageCommand = _manageCommand;
+                SceneManager.LoadSceneAsync(Scenes.Activity.TransitionBootstrap, LoadSceneMode.Additive);
             }
-        }
-
-        private void Manage()
-        {
-            _outSequence.OnComplete -= Manage;
-            _manageCommand.Execute();
         }
     }
 }
