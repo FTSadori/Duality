@@ -29,7 +29,7 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy.Commands
 
         private void Move(Vector3 direction)
         {
-            _rigidbody.position += Time.fixedDeltaTime * _velocity * new Vector2(direction.x, direction.y);
+            _rigidbody.position += Time.deltaTime * _velocity * new Vector2(direction.x, direction.y);
         }
 
         private void RotateEye(Vector3 direction)

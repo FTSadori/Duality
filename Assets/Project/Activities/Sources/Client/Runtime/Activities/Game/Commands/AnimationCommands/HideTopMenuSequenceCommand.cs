@@ -13,7 +13,7 @@ namespace Client.Runtime.Activities.Game.Commands.AnimationCommands
         {
             Sequence sequence = DOTween.Sequence();
 
-            sequence.Insert(0f, _wholeTopMenu.DOAnchorPosY(450f + 85f, 0.6f).SetEase(Ease.InOutQuad));
+            sequence.Insert(0f, _wholeTopMenu.DOAnchorPosY(800f + 85f, 0.6f).SetEase(Ease.InOutQuad));
             sequence.Insert(0f, _wholeMiddleMenu.DOAnchorPosY(0f, 0.6f).SetEase(Ease.InOutQuad));
 
             sequence.OnComplete(() => { OnComplete?.Invoke(); });

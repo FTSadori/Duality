@@ -14,7 +14,7 @@ namespace Client.Runtime.Activities.Game.Commands.AnimationCommands
             Sequence sequence = DOTween.Sequence();
 
             sequence.Insert(0f, _wholeBottomMenu.DOAnchorPosY(0f, 1f).SetEase(Ease.InOutQuad));
-            sequence.Insert(0f, _wholeMiddleMenu.DOAnchorPosY(450f, 1f).SetEase(Ease.InOutQuad));
+            sequence.Insert(0f, _wholeMiddleMenu.DOAnchorPosY(800f, 1f).SetEase(Ease.InOutQuad));
 
             sequence.OnComplete(() => { OnComplete?.Invoke(); });
         }

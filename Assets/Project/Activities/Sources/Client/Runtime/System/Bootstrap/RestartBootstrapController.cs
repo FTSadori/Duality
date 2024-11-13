@@ -1,4 +1,6 @@
-﻿using Client.Runtime.System;
+﻿using Client.Runtime.Activities.Lobby.Commands.AnimationCommands;
+using Client.Runtime.Framework.Unity.SceneCommands;
+using Client.Runtime.System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +9,9 @@ namespace Sources.Client.Runtime.System.Bootstrap
     public sealed class RestartBootstrapController : MonoBehaviour
     {
         public static string _currentLevel = "";
+
+        [SerializeField] private ShowScreenSequenceCommand _showScreen;
+        [SerializeField] private HideScreenSequenceCommand _hideScreen;
 
         private AsyncOperation _unloadLevelOperation;
         private AsyncOperation _loadLevelOperation;
@@ -18,6 +23,14 @@ namespace Sources.Client.Runtime.System.Bootstrap
 
         private void Awake()
         {
+            _showScreen.OnComplete += AfterScreen;
+            _hideScreen.OnComplete += Complete;
+            _showScreen.Execute();
+        }
+
+        private void AfterScreen()
+        {
+            _showScreen.OnComplete -= AfterScreen;
             _unloadLevelOperation = SceneManager.UnloadSceneAsync(_currentLevel);
             _unloadLevelOperation.completed += OnLevelSceneUnloaded;
 
@@ -52,8 +65,15 @@ namespace Sources.Client.Runtime.System.Bootstrap
         {
             if (_isLevelLoaded && _isGUILoaded)
             {
-                SceneManager.UnloadSceneAsync(gameObject.scene.name);
+                _isLevelLoaded = false;
+                _hideScreen.Execute();
             }
+        }
+
+        private void Complete()
+        {
+            _hideScreen.OnComplete -= Complete;
+            SceneManager.UnloadSceneAsync(gameObject.scene.name);
         }
 
         private void OnDestroy()

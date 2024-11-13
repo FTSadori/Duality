@@ -35,7 +35,7 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy.Commands
                 AttackPlayer(toPlayer);
             }
             else
-                _attacksTimer -= Time.fixedDeltaTime;
+                _attacksTimer -= Time.deltaTime;
         }
 
         private void AttackPlayer(Vector3 toPlayer)

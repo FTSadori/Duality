@@ -37,7 +37,7 @@ namespace Client.Runtime.Activities.Game.Commands.AnimationCommands
             sequence.Insert(0.0f, _wholeBackButton.DORotate(new Vector3(0, 0, 0), 0.3f).SetEase(Ease.OutQuad));
             sequence.Insert(0.0f, _backButtonImage.DOFade(0f, 0.3f).SetEase(Ease.OutQuad));
             sequence.Insert(0.0f, _backButtonText.DOFade(0f, 0.3f).SetEase(Ease.OutQuad));
-            sequence.Insert(0.0f, _wholeBackButton.DOAnchorPosY(375f, 0.3f).SetEase(Ease.OutQuad));
+            sequence.Insert(0.0f, _wholeBackButton.DOAnchorPosY(-60f, 0.3f).SetEase(Ease.OutQuad));
             sequence.Insert(0.5f, _innerTitle.DOFade(1f, 0.3f).SetEase(Ease.InQuad));
             sequence.Insert(0.5f, _outerTitle.DOFade(1f, 0.3f).SetEase(Ease.InQuad));
 

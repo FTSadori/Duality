@@ -17,10 +17,10 @@ namespace Client.Runtime.Activities.Lobby.Commands.AnimationCommands
         {
             Sequence sequence = DOTween.Sequence();
 
-            sequence.Insert(0f, _buttonLeftTop.DOAnchorPosX(-262f, 1f).SetEase(Ease.OutQuad));
-            sequence.Insert(0.2f, _buttonLeftDown.DOAnchorPosX(-241f, 1f).SetEase(Ease.OutQuad));
-            sequence.Insert(0f, _buttonRightTop.DOAnchorPosX(262f, 1f).SetEase(Ease.OutQuad));
-            sequence.Insert(0.2f, _buttonRightDown.DOAnchorPosX(241f, 1f).SetEase(Ease.OutQuad));
+            sequence.Insert(0f, _buttonLeftTop.DOAnchorPosX(128f, 1f).SetEase(Ease.OutQuad));
+            sequence.Insert(0.2f, _buttonLeftDown.DOAnchorPosX(149f, 1f).SetEase(Ease.OutQuad));
+            sequence.Insert(0f, _buttonRightTop.DOAnchorPosX(-128f, 1f).SetEase(Ease.OutQuad));
+            sequence.Insert(0.2f, _buttonRightDown.DOAnchorPosX(-149f, 1f).SetEase(Ease.OutQuad));
             sequence.Insert(0f, _logoImage.DOAnchorPosY(138f, 0.6f).SetEase(Ease.OutQuad));
             sequence.Insert(0.5f, _girlImage.DOAnchorPosY(110f, 1f).SetEase(Ease.OutQuad));
             sequence.Insert(1.5f, _girlImage.DOAnchorPosY(87f, 0.2f).SetEase(Ease.InQuad));
