@@ -1,6 +1,7 @@
 ﻿using Client.Runtime.Activities.Game.Controllers;
 using Client.Runtime.Activities.Game.Player;
 using Client.Runtime.Activities.Game.Player.Base;
+using Client.Runtime.Activities.Game.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Zenject;
@@ -13,9 +14,9 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private CursorController _cursorController;
         [SerializeField] private GameObject _swordPrefab;
+        [SerializeField] private BulletScriptableObject _swordObject;
         [Inject] private PlayerModel _playerModel;
 
-        private float _knockbackPower = 20f;
         private float _soulPerAttack = 0.3f;
 
         private float _distanceToSword = 0.3f;
@@ -57,7 +58,7 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
                 );
             _currentSwordTargetAngle = 2f * _swordAmplitude;
 
-            SubscribeToBullet(_currentSword);
+            InitBullet(_currentSword);
         }
 
         private void AnimateSword()
@@ -84,12 +85,20 @@ namespace Client.Runtime.Activities.Game.Commands.AttackCommands
             _playerModel.Soul += _soulPerAttack;
         }
 
-        private void SubscribeToBullet(GameObject bullet)
+        private void InitBullet(GameObject bullet)
         {
             if (bullet.TryGetComponent(out BulletController bulletController))
             {
-                bulletController._forceVector = _knockbackPower * _cursorController.CursorDirection;
+                bulletController._forceVector = _swordObject._force * _cursorController.CursorDirection;
+                bulletController._bulletScriptableObject = _swordObject;
                 bulletController.OnHit += AddSoul;
+            }
+
+            bullet.transform.localScale = _swordObject._baseScale * Vector3.one;
+
+            if (bullet.TryGetComponent(out SpriteRenderer spriteRenderer))
+            {
+                spriteRenderer.color = _swordObject._color;
             }
         }
 

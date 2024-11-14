@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyView: {fileID: 7788804944451829475}
-  _enemyController: {fileID: -1414427857543999444}
+  _enemyController: {fileID: 9079609372632107044}
 --- !u!1 &555817107088247952
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,9 +92,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 5067753866528699776}
   _playerView: {fileID: 0}
-  _jumpForce: 10
+  _jumpForce: 7
   _angleOffset: 35
-  _timeBetweenJumps: 1
+  _timeBetweenJumps: 2
 --- !u!1 &743473427515448591
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,9 +104,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3866740573525845960}
-  - component: {fileID: -1414427857543999444}
+  - component: {fileID: 9079609372632107044}
   m_Layer: 0
-  m_Name: WhiteEyeFlower
+  m_Name: FatWhiteEyeFlower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +134,7 @@ Transform:
   - {fileID: 6613806606425825913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1414427857543999444
+--- !u!114 &9079609372632107044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbc4a4f56219054ebe2fd30bf37607c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startMaxHp: 5
-  _knockbackResistance: 0
+  _startMaxHp: 7
+  _knockbackResistance: 0.8
   _attackMoving: {fileID: 5159601648747577037}
   _idleMoving: {fileID: 9121438727993667452}
   _attack: {fileID: 1441600128605775316}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 5067753866528699776}
   _playerView: {fileID: 0}
-  _velocity: 1.5
+  _velocity: 0.5
   _angleOffset: 35
 --- !u!1 &1405638646123617276
 GameObject:
@@ -230,7 +230,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3866740573525845960}
@@ -410,10 +410,10 @@ MonoBehaviour:
   _rigidbody: {fileID: 5067753866528699776}
   _playerView: {fileID: 0}
   _bulletPrefab: {fileID: 4775868087973582856, guid: 6c0493a43df57754f82239be6bd9426a, type: 3}
-  _bulletObject: {fileID: 11400000, guid: 3859639abf4d95c40a5f64c870713b64, type: 2}
-  _bulletCount: 3
-  _angleRange: 45
-  _timeBetweenAttacks: 2
+  _bulletObject: {fileID: 11400000, guid: fb84196438260cf44881a34fee11036c, type: 2}
+  _bulletCount: 18
+  _angleRange: 360
+  _timeBetweenAttacks: 5
 --- !u!1 &7299738393937489214
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentObject: {fileID: 743473427515448591}
-  _deathTime: 2
+  _deathTime: 3
 --- !u!1 &9013462113483644111
 GameObject:
   m_ObjectHideFlags: 0

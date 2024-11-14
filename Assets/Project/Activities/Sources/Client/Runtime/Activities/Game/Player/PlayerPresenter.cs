@@ -23,7 +23,7 @@ namespace Client.Runtime.Activities.Game.Player
         {
             if (gameObject.TryGetComponent(out BulletController bulletController))
             {
-                _playerModel.CurrentHP -= bulletController.ContactDamage;
+                _playerModel.CurrentHP -= bulletController._bulletScriptableObject._contactDamage;
                 _playerView.Rigidbody.AddForce(bulletController._forceVector, ForceMode2D.Impulse);
                 bulletController.AfterEnemyHit();
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Runtime.Activities.Game.ScriptableObjects;
+using System;
 using UnityEngine;
 
 namespace Client.Runtime.Activities.Game.Controllers
@@ -6,17 +7,13 @@ namespace Client.Runtime.Activities.Game.Controllers
     [RequireComponent(typeof(Rigidbody2D))]
     public sealed class BulletController : MonoBehaviour
     {
-        public int ContactDamage => _contactDamage;
         public Action OnHit;
         public Action BeforeDestroy;
 
-        [Header("Stats")]
-        [SerializeField] private int _contactDamage = 1;
-        public Vector2 _forceVector;
+        [HideInInspector] public BulletScriptableObject _bulletScriptableObject;
+        private float _timer = 0;
 
-        [Header("Destroying")]
-        [SerializeField] private bool _isDestroyableFromContact = false;
-        [SerializeField] private float _timeToAutoDestroy = 5f;
+        [HideInInspector] public Vector2 _forceVector;
 
         public Rigidbody2D Rb { get; private set; }
 
@@ -27,9 +24,9 @@ namespace Client.Runtime.Activities.Game.Controllers
 
         private void Update()
         {
-            _timeToAutoDestroy -= Time.deltaTime;
+            _timer += Time.deltaTime;
 
-            if (_timeToAutoDestroy < 0)
+            if (_timer > _bulletScriptableObject._timeToAutoDestroy)
                 Destroy(gameObject);
         }
 
@@ -37,7 +34,7 @@ namespace Client.Runtime.Activities.Game.Controllers
         {
             OnHit?.Invoke();
 
-            if (_isDestroyableFromContact)
+            if (_bulletScriptableObject._isDestroyableFromContact)
             {
                 Destroy(gameObject);
             }

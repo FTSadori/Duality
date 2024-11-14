@@ -1,5 +1,6 @@
 ﻿using Client.Runtime.Activities.Game.Controllers;
 using Client.Runtime.Activities.Game.Player;
+using Client.Runtime.Activities.Game.ScriptableObjects;
 using Client.Runtime.Framework.Unity;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -20,13 +21,12 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy.Commands
 
         [Header("Stats")]
         [SerializeField] private GameObject _bulletPrefab;
+        [SerializeField] private BulletScriptableObject _bulletObject;
         [SerializeField] private int _bulletCount = 3;
         [SerializeField] private float _angleRange = 45f;
         [SerializeField] private float _timeBetweenAttacks = 2f;
-        [SerializeField] private float _bulletSpeed = 3f;
         private float _attacksTimer = -1f;
-        private float _bulletForce = 10f;
-
+        
         public override void Execute()
         {
             if (_attacksTimer < 0f)
@@ -49,19 +49,31 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy.Commands
             float angle = toPlayerAngle - _angleRange / 2f;
             for (int i = 0; i < _bulletCount; ++i)
             {
-                var direction = new Vector3(Mathf.Cos(angle / 180 * Mathf.PI), Mathf.Sin(angle / 180 * Mathf.PI));
-                var obj = Instantiate(_bulletPrefab, _rigidbody.transform.position + direction, Quaternion.Euler(0, 0, angle));
-
-                if (obj.TryGetComponent(out BulletController bulletController))
-                {
-                    bulletController.Rb.velocity = _bulletSpeed * direction;
-                    bulletController._forceVector = _bulletForce * direction;
-                }
+                InstantiateButton(angle);
 
                 if (_bulletCount != 1)
                 {
                     angle += _angleRange / (_bulletCount - 1);
                 }
+            }
+        }
+
+        private void InstantiateButton(float angle)
+        {
+            var direction = new Vector3(Mathf.Cos(angle / 180 * Mathf.PI), Mathf.Sin(angle / 180 * Mathf.PI));
+            var obj = Instantiate(_bulletPrefab, _rigidbody.transform.position + direction, Quaternion.Euler(0, 0, angle));
+            obj.transform.localScale = _bulletObject._baseScale * Vector3.one;
+
+            if (obj.TryGetComponent(out SpriteRenderer spriteRenderer))
+            {
+                spriteRenderer.color = _bulletObject._color;
+            }
+
+            if (obj.TryGetComponent(out BulletController bulletController))
+            {
+                bulletController._bulletScriptableObject = _bulletObject;
+                bulletController.Rb.velocity = _bulletObject._speed * direction;
+                bulletController._forceVector = _bulletObject._force * direction;
             }
         }
     }

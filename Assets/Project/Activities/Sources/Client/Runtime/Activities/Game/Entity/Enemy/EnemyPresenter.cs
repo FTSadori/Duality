@@ -26,7 +26,7 @@ namespace Client.Runtime.Activities.Game.Entity.Enemy
         {
             if (gameObject.TryGetComponent(out BulletController bulletController))
             {
-                _enemyController.Model.CurrentHP -= bulletController.ContactDamage;
+                _enemyController.Model.CurrentHP -= bulletController._bulletScriptableObject._contactDamage;
                 _enemyView.Rigidbody.AddForce(bulletController._forceVector, ForceMode2D.Impulse);
                 bulletController.AfterEnemyHit();
             }
