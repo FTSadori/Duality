@@ -29,8 +29,7 @@ namespace Client.Runtime.Activities.Game.Controllers
 
         private void UpdateCursorPosition()
         {
-            var resolution = Screen.currentResolution;
-            _cursorDirection = new Vector2(Input.mousePosition.x - resolution.width / 2, Input.mousePosition.y - resolution.height / 2).normalized;
+            _cursorDirection = new Vector2(Input.mousePosition.x - Screen.width / 2, Input.mousePosition.y - Screen.height / 2).normalized;
 
             _cursorAngle = Mathf.Asin(_cursorDirection.y) * 180f / Mathf.PI;
             if (Mathf.Sign(_cursorDirection.x) == -1f)
