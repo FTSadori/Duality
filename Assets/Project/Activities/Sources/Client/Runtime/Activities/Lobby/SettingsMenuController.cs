@@ -54,6 +54,11 @@ namespace Client.Runtime.Activities.Lobby
                 resolutionDropdown.value = PlayerPrefs.GetInt("ResolutionIndex");
                 resolutionDropdown.RefreshShownValue();
             }
+            if (PlayerPrefs.HasKey("FullscreenIndex"))
+            {
+                fullscreenDropdown.value = PlayerPrefs.GetInt("FullscreenIndex");
+                fullscreenDropdown.RefreshShownValue();
+            }
             if (PlayerPrefs.HasKey("MasterVolume"))
             {
                 MasterVolumeChanged(PlayerPrefs.GetFloat("MasterVolume"));
@@ -86,6 +91,7 @@ namespace Client.Runtime.Activities.Lobby
         public void FullscreenModeChanged(int fullscreenModeIndex)
         {
             string line = fullscreenModes[fullscreenModeIndex];
+            PlayerPrefs.SetInt("FullscreenIndex", fullscreenModeIndex);
             if (line == "Windowed")
             {
                 Screen.fullScreen = false;
