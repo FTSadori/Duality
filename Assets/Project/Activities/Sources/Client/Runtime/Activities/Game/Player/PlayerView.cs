@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using DG.Tweening;
 
 namespace Client.Runtime.Activities.Game.Player
 {
     public sealed class PlayerView : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         public Rigidbody2D Rigidbody => _rigidbody;
 

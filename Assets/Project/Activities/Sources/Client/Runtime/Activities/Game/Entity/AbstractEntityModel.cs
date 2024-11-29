@@ -13,7 +13,7 @@ namespace Client.Runtime.Activities.Game.Entity
         public event Action OnGotHit;
         public event Action OnGotHeal;
         public event Action OnDeath;
-        
+
         public int MaxHP
         {
             get => _maxHp;

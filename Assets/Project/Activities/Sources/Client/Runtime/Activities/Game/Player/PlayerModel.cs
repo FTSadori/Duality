@@ -9,8 +9,12 @@ namespace Client.Runtime.Activities.Game.Player
         public Action OnSoulChanged;
         public Action OnMaxSoulChanged;
 
-        private float _maxSoul;
+        public Action OnRealDeath;
+
+        private float _maxSoul = 1f;
         private float _soul;
+
+        private bool _isReallyDead = false;
 
         public float MaxSoul
         {
@@ -30,6 +34,12 @@ namespace Client.Runtime.Activities.Game.Player
             {
                 _soul = Mathf.Clamp(value, 0f, _maxSoul);
                 OnSoulChanged?.Invoke();
+
+                if (_soul < 0.01f && _hp == 0 && !_isReallyDead)
+                {
+                    _isReallyDead = true;
+                    OnRealDeath?.Invoke();
+                }
             }
         }
 

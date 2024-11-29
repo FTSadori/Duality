@@ -12,6 +12,9 @@ namespace Client.Runtime.Activities.Game.Player.Controllers
 
         private void Update()
         {
+            if (_playerModel.CurrentHP == 0 && _playerModel.Soul < 0.01f)
+                return;
+
             _basicAttackCommand?.Execute();
         }
     }

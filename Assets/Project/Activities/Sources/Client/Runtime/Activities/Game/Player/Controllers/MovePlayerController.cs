@@ -16,6 +16,10 @@ namespace Client.Runtime.Activities.Game.Player.Controllers
 
         private void FixedUpdate()
         {
+            if (_playerModel.CurrentHP == 0 && _playerModel.Soul < 0.01f)
+                return;
+
+
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector2 normalized = new Vector2(horizontal, vertical).normalized;

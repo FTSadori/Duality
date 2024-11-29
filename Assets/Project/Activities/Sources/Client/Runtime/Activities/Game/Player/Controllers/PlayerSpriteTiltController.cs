@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace Client.Runtime.Activities.Game.Player.Controllers
 {
     public sealed class PlayerSpriteTiltController : MonoBehaviour
     {
         [SerializeField] private PlayerView _playerView;
+        [Inject] private PlayerModel _playerModel;
 
         [SerializeField] private float _baseHorizontalTilt = 10f;
         [SerializeField] private float _horizonalTiltSpeed = 4f;
@@ -19,6 +21,10 @@ namespace Client.Runtime.Activities.Game.Player.Controllers
 
         void FixedUpdate()
         {
+            if (_playerModel.CurrentHP == 0 && _playerModel.Soul < 0.01f)
+                return;
+
+
             HorizontalTilting();
         }
 
