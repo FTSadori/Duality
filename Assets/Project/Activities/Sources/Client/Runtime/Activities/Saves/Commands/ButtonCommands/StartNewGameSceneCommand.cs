@@ -7,10 +7,10 @@ namespace Client.Runtime.Activities.Saves.Commands.ButtonCommands
 {
     public sealed class StartNewGameSceneCommand : ManageScenesCommand
     {
-        // doto: is going to be used later
+        // todo: is going to be used later
         [SerializeField] private int _saveNumber;
         protected override string SceneToLoadAndActivate => Scenes.Activity.Tutorial;
         protected override List<string> ScenesToUnload => new() { Scenes.Activity.Lobby, Scenes.Activity.LobbyBackground };
-        protected override List<string> ScenesToLoad => new() { Scenes.Activity.GameGUI };
+        protected override List<string> ScenesToLoad => new() { };
     }
 }

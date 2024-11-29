@@ -19,7 +19,7 @@ namespace Sources.Client.Runtime.System.Bootstrap
 
         private AsyncOperation _unloadGUIOperation;
         private AsyncOperation _loadGUIOperation;
-        private bool _isGUILoaded = false;
+        private bool _isGUIUnloaded = false;
 
         private void Awake()
         {
@@ -46,8 +46,7 @@ namespace Sources.Client.Runtime.System.Bootstrap
 
         private void OnGUISceneUnloaded(AsyncOperation operation)
         {
-            _loadGUIOperation = SceneManager.LoadSceneAsync(Scenes.Activity.GameGUI, LoadSceneMode.Additive);
-            _loadGUIOperation.completed += OnGUISceneLoaded;
+            _isGUIUnloaded = operation.isDone;
         }
 
         private void OnLevelSceneLoaded(AsyncOperation operation)
@@ -56,14 +55,9 @@ namespace Sources.Client.Runtime.System.Bootstrap
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(_currentLevel));
         }
 
-        private void OnGUISceneLoaded(AsyncOperation operation)
-        {
-            _isGUILoaded = operation.isDone;
-        }
-
         private void Update()
         {
-            if (_isLevelLoaded && _isGUILoaded)
+            if (_isLevelLoaded && _isGUIUnloaded)
             {
                 _isLevelLoaded = false;
                 _hideScreen.Execute();
@@ -81,7 +75,6 @@ namespace Sources.Client.Runtime.System.Bootstrap
             _unloadGUIOperation.completed -= OnGUISceneUnloaded;
             _unloadLevelOperation.completed -= OnLevelSceneUnloaded;
             _loadLevelOperation.completed -= OnLevelSceneLoaded;
-            _loadGUIOperation.completed -= OnGUISceneLoaded;
         }
     }
 }
