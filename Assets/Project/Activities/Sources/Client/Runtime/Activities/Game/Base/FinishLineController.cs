@@ -20,6 +20,8 @@ namespace Client.Runtime.Activities.Game.Base
 
         [SerializeField] GameObject _rowPrefab;
 
+        private List<GameObject> _rows = new();
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("PlayerEntity"))
@@ -55,12 +57,12 @@ namespace Client.Runtime.Activities.Game.Base
             GetLeaderboard();
         }
 
-        private void GetLeaderboard()
+        public void GetLeaderboard()
         {
             var request = new GetLeaderboardAroundPlayerRequest
             {
                 StatisticName = "TutorialScore",
-                MaxResultsCount = 9,
+                MaxResultsCount = 7,
             };
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, OnSuccess, OnError);
         }
@@ -75,7 +77,7 @@ namespace Client.Runtime.Activities.Game.Base
             _errorMessage.text = obj.ErrorMessage;
         }
 
-        void DrawLeaderBoard(GetLeaderboardAroundPlayerResult result)
+        private void DrawLeaderBoard(GetLeaderboardAroundPlayerResult result)
         {
             int y = 87;
             foreach (var item in result.Leaderboard)
@@ -83,6 +85,7 @@ namespace Client.Runtime.Activities.Game.Base
                 GameObject newRow = Instantiate(_rowPrefab, _table);
 
                 newRow.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, y);
+                _rows.Add(newRow);
                 y -= 30;
 
                 var texts = newRow.GetComponentsInChildren<TMPro.TMP_Text>();
@@ -97,6 +100,15 @@ namespace Client.Runtime.Activities.Game.Base
                     texts[2].color = Color.red;
                 }
             }
+        }
+
+        public void ClearLeaderboard()
+        {
+            foreach (var row in _rows)
+            {
+                Destroy(row);
+            }
+            _rows.Clear();
         }
     }
 }
