@@ -17,10 +17,12 @@ namespace Client.Runtime.Activities.Game.Base
         [SerializeField] TMPro.TMP_Text _ourResult;
         [SerializeField] TMPro.TMP_Text _errorMessage;
         [SerializeField] GameObject _player;
+        [SerializeField] TMPro.TMP_Text _newShardsText;
 
         [SerializeField] GameObject _rowPrefab;
 
         private List<GameObject> _rows = new();
+        private int _newShards;
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -34,22 +36,8 @@ namespace Client.Runtime.Activities.Game.Base
         {
             _window.SetActive(true);
             _player.SetActive(false);
-            var total = Mathf.Max(0, _points.score);
-
-            _ourResult.text = "New final score:" + total.ToString();
-
-            var request = new UpdatePlayerStatisticsRequest
-            {
-                Statistics = new List<StatisticUpdate>
-                {
-                    new StatisticUpdate
-                    {
-                        StatisticName = "TutorialScore",
-                        Value = total,
-                    }
-                }
-            };
-            PlayFabClientAPI.UpdatePlayerStatistics(request, OnStatSuccess, OnError);
+            
+            AddShards();
         }
 
         private void OnStatSuccess(UpdatePlayerStatisticsResult obj)
@@ -100,6 +88,44 @@ namespace Client.Runtime.Activities.Game.Base
                     texts[2].color = Color.red;
                 }
             }
+        }
+
+        private void AddShards()
+        {
+            var total = Mathf.Max(0, _points.score);
+            _newShards = total / 10;
+
+            var request = new AddUserVirtualCurrencyRequest
+            {
+                VirtualCurrency = "SH",
+                Amount = _newShards
+            };
+
+            PlayFabClientAPI.AddUserVirtualCurrency(request, OnAddUserVirtualCurrency, OnError);
+        }
+
+        private void OnAddUserVirtualCurrency(ModifyUserVirtualCurrencyResult result)
+        {
+            Debug.Log("Shards gained");
+
+            var total = Mathf.Max(0, _points.score);
+
+            _newShardsText.text = "You got " + _newShards + " shards!";
+
+            _ourResult.text = "New final score:" + total.ToString();
+
+            var request = new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate>
+                {
+                    new StatisticUpdate
+                    {
+                        StatisticName = "TutorialScore",
+                        Value = total,
+                    }
+                }
+            };
+            PlayFabClientAPI.UpdatePlayerStatistics(request, OnStatSuccess, OnError);
         }
 
         public void ClearLeaderboard()
